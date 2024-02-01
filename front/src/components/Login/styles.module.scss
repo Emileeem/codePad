@@ -1,0 +1,9 @@
+@use "sass:map";
+@import "../../custom";
+
+.inputEmail{
+  border-color: map.get($theme-colors, "primary");
+}
+.inputEmail:focus{
+  border-color: map.get($theme-colors, "primary");
+}
