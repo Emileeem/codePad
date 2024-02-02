@@ -6,6 +6,10 @@ $theme-colors: (
   'dark': #121212,
   'light': green
   );
-  
+
 @import '~bootstrap/scss/bootstrap';
+[data-bs-theme="dark"] {
+  --bs-body-bg: var(--bs-black);
+  --bs-border-color: var(--bs-primary);
+};
 //'warning': #FF9535

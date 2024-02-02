@@ -2,8 +2,8 @@
 @import "../../custom";
 
 .inputEmail{
-  border-color: map.get($theme-colors, "primary");
+  border-color: var(--bs-warning);
 }
 .inputEmail:focus{
-  border-color: map.get($theme-colors, "primary");
+  border-color: var(--bs-primary);
 }
