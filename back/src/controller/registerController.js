@@ -59,7 +59,8 @@ class RegisterController {
     });
 
     try {
-      await Register.create(register);
+      await register.save();
+      await user.save();
       res.status(201).send({ message: "Usuário cadastrado com sucesso" });
     } catch (error) {
       return res
