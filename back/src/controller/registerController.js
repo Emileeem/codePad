@@ -49,7 +49,7 @@ class RegisterController {
 
     const register = new Register({
       login: email,
-      author,
+      user,
       email,
       nickname,
       password: passwordCrypt,
