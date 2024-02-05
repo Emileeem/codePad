@@ -1,7 +1,8 @@
 import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 import styles from "./styles.module.scss";
 
-export function Login() {
+export function Login({ loginHandle }) {
   return (
     <Form>
       <Form.Group>
@@ -17,6 +18,9 @@ export function Login() {
           We'll never share your email with anyone else.
         </Form.Text>
       </Form.Group>
+      <div className="d-flex justify-content-end">
+        <Button onClick={loginHandle}>Login</Button>
+      </div>
     </Form>
   );
 }
