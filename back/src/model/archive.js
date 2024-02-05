@@ -1,34 +1,37 @@
 const mongoose = require("mongoose");
-const {PathSchema} = require("./path")
+const { userSchema } = require("./user");
+const ArchiveSchema =   new mongoose.Schema({
+  user: {
+    type: userSchema,
+    required: true
+  },
+  title: {
+    type: String,
+    required: true,
+    minlength: 3,
+  },
+  text: {
+    type: String,
+    required: false
+  },
+  createdAt: {
+    type: Date,
+    required: true,
+  },
+  updatedAt: {
+    type: Date,
+    required: false,
+  },
+  removedAt: {
+    type: Date,
+    required: false,
+  },
+})
 const Archive = mongoose.model(
   "Archive",
-  new mongoose.Schema({
-    isArchive: {
-      type: Boolean,
-      required: true,
-    },
-    path: {
-      type: String,
-      required: true,
-      minlength: 3,
-    },
-    archives: {
-        type: [PathSchema],
-        required: false,
-    },
-    createdAt: {
-      type: Date,
-      required: true,
-    },
-    updatedAt: {
-      type: Date,
-      required: false,
-    },
-    removedAt: {
-      type: Date,
-      required: false,
-    },
-  })
+  ArchiveSchema
 );
 
-module.exports = Archive;
+exports.Archive = Archive;
+exports.ArchiveSchema = ArchiveSchema;
+

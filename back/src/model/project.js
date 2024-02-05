@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { userSchema } = require("./user");
-const {Archive} = require("./archive");
+const { ArchiveSchema} = require("./archive");
 
 const Project = mongoose.model(
   "Project",
@@ -19,7 +19,7 @@ const Project = mongoose.model(
       required: true,
     },
     archive: {
-      type: Archive,
+      type: ArchiveSchema,
       required: false,
     },
     createdAt: {
