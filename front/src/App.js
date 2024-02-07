@@ -6,14 +6,12 @@ import Container from 'react-bootstrap/Container';
 
 function App() {
   return (
-    <Container fluid="md">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={ <LoginPage/> }/>
-          <Route path="/project" element={ <ProjectPage/> }/>
-        </Routes>
-      </BrowserRouter>
-    </Container>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={ <LoginPage/> }/>
+        <Route path="/project" element={ <ProjectPage/> }/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

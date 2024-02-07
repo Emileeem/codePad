@@ -1,0 +1,32 @@
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, transparent,  30%)) {
+  &::-webkit-scrollbar {
+    width:  $size;
+    height: $size;
+    border-radius: 20px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+    border-radius: 20px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: $background-color;
+    border-radius: 20px;
+  }
+
+  & {
+    scrollbar-face-color: $foreground-color;
+    scrollbar-track-color: $background-color;
+  }
+}
+
+body{
+  @include scrollbars(.4em, white);
+}
+.CodeMirror
+{
+  @include scrollbars(.3em, slategray);
+  height: 100% !important;
+  overflow-y: auto;
+}
