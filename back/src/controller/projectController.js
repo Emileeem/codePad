@@ -1,5 +1,6 @@
 const Project = require("../model/project");
-const UserController = require("./userController");
+const { User } = require("../model/user");
+const { Archive } = require("../model/archive");
 
 class projectController {
   static async create(req, res) {
@@ -15,10 +16,8 @@ class projectController {
         .send({ message: "o titulo não pode ser menor que 4 caracteres" });
 
     try {
-      const user = await User.findOne({ nickname });
-      const existingProject = await Archive.findOne({
-        $and: [{ title }, { "user.nickname": nickname }],
-      });
+      const user = await User.findById(userid);
+      const existingProject = await Project.findOne({ title, user });
 
       if (existingProject) {
         return res.status(422).json({ message: "Projeto já existe" });
@@ -30,6 +29,7 @@ class projectController {
       const product = {
         title,
         user,
+        archives: [],
         createdAt: Date.now(),
         updatedAt: Date.now(),
         removedAt: null,
@@ -67,6 +67,64 @@ class projectController {
         .json({ message: "Erro ao tentar excluir projeto" });
     }
   }
-}
+  static async update(req, res) {
+    const { projectId, titleArquive, text, id } = req.body;
 
+    if (!projectId) {
+      return res.status(400).send({ message: "O ID do projeto é obrigatório" });
+    }
+
+    try {
+      const project = await Project.findById(projectId);
+
+      if (!project) {
+        return res.status(404).send({ message: "O projeto não existe" });
+      }
+
+      let archives = project.archives;
+
+      if (id) {
+        const existingArchiveIndex = archives.findIndex(
+          (archive) => archive._id.toString() === id
+        );
+
+        if (existingArchiveIndex === -1) {
+          return res
+            .status(404)
+            .send({ message: "O arquivo não existe neste projeto" });
+        }
+
+        if (titleArquive && text) {
+          archives[existingArchiveIndex].title = titleArquive;
+          archives[existingArchiveIndex].text = text;
+          archives[existingArchiveIndex].updatedAt = Date.now();
+        } else {
+          archives.splice(existingArchiveIndex, 1);
+        }
+      } else {
+        const newArchive = new Archive({
+          user: project.user,
+          title: titleArquive,
+          text,
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
+          removedAt: null,
+        });
+        archives.push(newArchive);
+      }
+
+      project.archives = archives;
+
+      await project.save();
+
+      return res
+        .status(200)
+        .send({ message: "Arquivo atualizado com sucesso" });
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ error: "Falha ao atualizar o arquivo", data: error.message });
+    }
+  }
+}
 module.exports = projectController;

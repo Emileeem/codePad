@@ -18,8 +18,8 @@ const Project = mongoose.model(
       type: userSchema,
       required: true,
     },
-    archive: {
-      type: ArchiveSchema,
+    archives: {
+      type: [ArchiveSchema],
       required: false,
     },
     createdAt: {
