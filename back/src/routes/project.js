@@ -6,5 +6,6 @@ route
     .post('/', ProjectController.create)
     .delete('/:projectId', ProjectController.delete)
     .put('/', ProjectController.update)
+    .get('/:projectid/*', ProjectController.getFile)
 
 module.exports = route;

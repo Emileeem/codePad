@@ -26,7 +26,7 @@ class projectController {
         return res.status(404).json({ message: "Usuário não encontrado" });
       }
 
-      const product = {
+      const project = {
         title,
         user,
         archives: [],
@@ -35,7 +35,7 @@ class projectController {
         removedAt: null,
       };
 
-      await Project.create(product);
+      await Project.create(project);
       return res.status(201).send({ message: "Projeto criado com sucesso" });
     } catch (error) {
       return res
@@ -67,8 +67,9 @@ class projectController {
         .json({ message: "Erro ao tentar excluir projeto" });
     }
   }
+
   static async update(req, res) {
-    const { projectId, titleArquive, text, id } = req.body;
+    const { projectId, fileName, content, id } = req.body;
 
     if (!projectId) {
       return res.status(400).send({ message: "O ID do projeto é obrigatório" });
@@ -94,18 +95,26 @@ class projectController {
             .send({ message: "O arquivo não existe neste projeto" });
         }
 
-        if (titleArquive && text) {
-          archives[existingArchiveIndex].title = titleArquive;
-          archives[existingArchiveIndex].text = text;
+        if (fileName && content) {
+          archives[existingArchiveIndex].fileName = fileName;
+          archives[existingArchiveIndex].content = content;
           archives[existingArchiveIndex].updatedAt = Date.now();
         } else {
           archives.splice(existingArchiveIndex, 1);
         }
       } else {
+        let filenameUsed = false;
+        archives.forEach(element => {
+          if (element.fileName === fileName)
+            filenameUsed = true;
+        });
+        if(filenameUsed)
+          return res.status(409).send({ message: "Nome de arquivo já utilizado" })
+
+
         const newArchive = new Archive({
-          user: project.user,
-          title: titleArquive,
-          text,
+          fileName: fileName,
+          content: content,
           createdAt: Date.now(),
           updatedAt: Date.now(),
           removedAt: null,
@@ -125,6 +134,42 @@ class projectController {
         .status(500)
         .send({ error: "Falha ao atualizar o arquivo", data: error.message });
     }
+  }
+
+  static async getFile(req, res)
+  {
+    const { projectid } = req.params;
+    const path = req.url.substring(2 + projectid.length);
+    
+    if (!projectid) {
+      return res.status(400).send({ message: "O ID do projeto é obrigatório" });
+    }
+
+    try {
+      const project = await Project.findById(projectid);
+
+      if (!project) {
+        return res.status(404).send({ message: "O projeto não existe" });
+      }
+
+      let archieve;
+      project.archives.every((e) => {
+        if(e.fileName == path){
+          archieve = e
+          return false;
+        }
+        return true;
+      });
+
+      if (archieve)
+        return res.status(200).send(archieve);
+
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ error: "Falha ao resgatar o arquivo", data: error.message });
+    }
+    return res.status(404).send({message: "Não encontrado"});
   }
 }
 module.exports = projectController;
