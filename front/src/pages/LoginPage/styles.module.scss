@@ -1,0 +1,44 @@
+@keyframes loginOutAnim {
+  0% {}
+  25% { opacity: 0%; display: none;}
+  100% { transform: translateX(100%); opacity: 0%; display: none;}
+}
+@keyframes loginInAnim {
+  0% { transform: translateX(100%); opacity: 0%; display: none;}
+  75% { opacity: 0%; display: none;}
+  100% {}
+}
+@keyframes registerInAnim {
+  0% {}
+  25% { opacity: 0%; display: none;}
+  100% { transform: translateX(-100%); opacity: 0%; display: none;}
+}
+@keyframes registerOutAnim {
+  0% { transform: translateX(-100%); opacity: 0%; display: none;}
+  75% { opacity: 0%; display: none;}
+  100% {}
+}
+
+.loginIn{
+  animation: loginOutAnim forwards;
+  animation-duration: 1s;
+}
+
+.loginOut{
+  animation: loginInAnim forwards;
+  animation-duration: 1s;
+}
+
+.registerStart{
+  transform: translateX(-100%);
+  opacity: 0%;
+  display: none;
+}
+.registerIn{
+  animation: registerInAnim forwards;
+  animation-duration: 1s;
+}
+.registerOut{
+  animation: registerOutAnim forwards;
+  animation-duration: 1s;
+}

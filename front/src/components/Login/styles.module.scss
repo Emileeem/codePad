@@ -1,0 +1,9 @@
+@use "sass:map";
+@import "../../custom";
+
+.inputEmail{
+  border-color: var(--bs-warning);
+}
+.inputEmail:focus{
+  border-color: var(--bs-primary);
+}

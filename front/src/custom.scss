@@ -1,0 +1,16 @@
+$theme-colors: (
+  'primary': #02FEE4,
+  'secondary': #808080,
+  'warning': #FF9535,
+  'danger': #F23CA6,
+  'success': #4BFF36,
+  'dark': #121212,
+  );
+
+@import '~bootstrap/scss/bootstrap';
+
+[data-bs-theme="dark"] {
+  --bs-body-bg: var(--bs-black);
+  --bs-border-color: var(--bs-primary);
+};
+//'warning': #FF9535
