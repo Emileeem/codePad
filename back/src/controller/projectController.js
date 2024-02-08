@@ -171,5 +171,52 @@ class projectController {
     }
     return res.status(404).send({message: "Não encontrado"});
   }
+
+  // FIXME arrumar
+  static async getFileNames(req, res)
+  {
+    const { projectid } = req.params;
+    
+    if (!projectid) {
+      return res.status(400).send({ message: "O ID do projeto é obrigatório" });
+    }
+
+    try {
+      const project = await Project.findById(projectid);
+
+      if (!project) {
+        return res.status(404).send({ message: "O projeto não existe" });
+      }
+
+      let filesStructure = {};
+      filesStructure['root'] = {};
+      project.archives.every((e) => {
+        let items = e.fileName.split('/')
+        var ref = filesStructure.root;
+        for (let i = 0; i < items.length; i++) {
+          if(i - items.length == 1)
+          {
+            if(!ref['files'])
+              ref['files'] = []
+            ref['files'].push(items[i])
+          } else {
+            if(!ref[items[i]])
+              ref[items[i]] = {}
+            ref = ref[items[i]]
+          }
+          
+        }
+      });
+
+      if (archieve)
+        return res.status(200).send(archieve);
+
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ error: "Falha ao resgatar o arquivo", data: error.message });
+    }
+    return res.status(404).send({message: "Não encontrado"});
+  }
 }
 module.exports = projectController;

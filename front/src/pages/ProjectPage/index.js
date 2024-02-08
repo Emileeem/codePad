@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -11,14 +11,24 @@ import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { tokyoNight } from "@uiw/codemirror-themes-all";
 import { ProjectToolBar } from "../../components/ProjectToolBar";
-
+import axios from 'axios'
 
 export function ProjectPage() {
-  const [value, setValue] = useState("console.log('hello world!');");
+  const [file, setFile] = useState({content: ""})
+
   const onChange = useCallback((val, viewUpdate) => {
     console.log(val);
-    setValue(val);
+    setFile({...file, content: val});
   }, []);
+
+  const getFile = async () => {
+    const {data} = await axios.get(process.env.REACT_APP_API_URL + "/project/65c4bebe697229baef1f90c6/teste.js");
+    setFile(data)
+  }
+
+  useEffect(() => {
+    getFile()
+  }, [])
 
   return (
     <>
@@ -32,7 +42,7 @@ export function ProjectPage() {
                     minHeight="100%"
                     className={styles.CodeMirror}
                     theme={tokyoNight}
-                    value={value}
+                    value={file.content}
                     extensions={[javascript({ jsx: true })]}
                     onChange={onChange}
                   />
