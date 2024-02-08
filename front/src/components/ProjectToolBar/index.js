@@ -17,7 +17,7 @@ export function ProjectToolBar() {
         <Card border="danger" className="h-100 p-2">
           <Container>
             <Row className="g-0">
-              <Col className="col-4 col-sm-12">
+              <Col className="col-4 col-sm-12 mb-2">
                 <Button
                   variant="outline-primary"
                   className="w-100 text-start fs-5"
@@ -26,7 +26,7 @@ export function ProjectToolBar() {
                   <span className="mx-2 d-none d-sm-inline">Invite</span>
                 </Button>
               </Col>
-              <Col className="col-4 col-sm-12">
+              <Col className="col-4 col-sm-12 mb-2">
                 <Button
                   variant="outline-warning"
                   className="w-100 text-start fs-5"
@@ -35,7 +35,7 @@ export function ProjectToolBar() {
                   <span className="mx-2 d-none d-sm-inline">Config</span>
                 </Button>
               </Col>
-              <Col className="col-4 col-sm-12">
+              <Col className="col-4 col-sm-12 mb-2">
                 <Dropdown>
                   <Dropdown.Toggle
                     className="w-100 text-center fs-5"
