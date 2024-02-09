@@ -104,13 +104,13 @@ class projectController {
         }
       } else {
         let filenameUsed = false;
-        archives.forEach(element => {
-          if (element.fileName === fileName)
-            filenameUsed = true;
+        archives.forEach((element) => {
+          if (element.fileName === fileName) filenameUsed = true;
         });
-        if(filenameUsed)
-          return res.status(409).send({ message: "Nome de arquivo já utilizado" })
-
+        if (filenameUsed)
+          return res
+            .status(409)
+            .send({ message: "Nome de arquivo já utilizado" });
 
         const newArchive = new Archive({
           fileName: fileName,
@@ -136,11 +136,11 @@ class projectController {
     }
   }
 
-  static async getFile(req, res)
-  {
+  static async getFile(req, res) {
     const { projectid } = req.params;
-    const path = req.url.substring(2 + projectid.length);
-    
+    // ("/" + "/files/").length = 8
+    const path = req.url.substring(8 + projectid.length);
+
     if (!projectid) {
       return res.status(400).send({ message: "O ID do projeto é obrigatório" });
     }
@@ -154,29 +154,25 @@ class projectController {
 
       let archieve;
       project.archives.every((e) => {
-        if(e.fileName == path){
-          archieve = e
+        if (e.fileName == path) {
+          archieve = e;
           return false;
         }
         return true;
       });
 
-      if (archieve)
-        return res.status(200).send(archieve);
-
+      if (archieve) return res.status(200).send(archieve);
     } catch (error) {
       return res
         .status(500)
         .send({ error: "Falha ao resgatar o arquivo", data: error.message });
     }
-    return res.status(404).send({message: "Não encontrado"});
+    return res.status(404).send({ message: "Não encontrado" });
   }
 
-  // FIXME arrumar
-  static async getFileNames(req, res)
-  {
+  static async getFileNames(req, res) {
     const { projectid } = req.params;
-    
+
     if (!projectid) {
       return res.status(400).send({ message: "O ID do projeto é obrigatório" });
     }
@@ -189,34 +185,30 @@ class projectController {
       }
 
       let filesStructure = {};
-      filesStructure['root'] = {};
+      filesStructure["root"] = {};
       project.archives.every((e) => {
-        let items = e.fileName.split('/')
+        let items = e.fileName.split("/");
         var ref = filesStructure.root;
+        console.log(items.length);
         for (let i = 0; i < items.length; i++) {
-          if(i - items.length == 1)
-          {
-            if(!ref['files'])
-              ref['files'] = []
-            ref['files'].push(items[i])
+          if (items.length - i == 1) {
+            ref[items[i]] = "file";
           } else {
-            if(!ref[items[i]])
-              ref[items[i]] = {}
-            ref = ref[items[i]]
+            if (!ref[items[i]]) ref[items[i]] = {};
+            ref = ref[items[i]];
           }
-          
         }
+        return true;
       });
 
-      if (archieve)
-        return res.status(200).send(archieve);
-
+      if (filesStructure)
+        return res.status(200).send(filesStructure);
     } catch (error) {
       return res
         .status(500)
         .send({ error: "Falha ao resgatar o arquivo", data: error.message });
     }
-    return res.status(404).send({message: "Não encontrado"});
+    return res.status(404).send({ message: "Não encontrado" });
   }
 }
 module.exports = projectController;
