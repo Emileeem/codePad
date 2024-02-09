@@ -192,7 +192,10 @@ class projectController {
         console.log(items.length);
         for (let i = 0; i < items.length; i++) {
           if (items.length - i == 1) {
-            ref[items[i]] = "file";
+            if(items[i].slice[-1] == "/")
+              ref[items[i]] = "folder";
+            else
+              ref[items[i]] = "file";
           } else {
             if (!ref[items[i]]) ref[items[i]] = {};
             ref = ref[items[i]];

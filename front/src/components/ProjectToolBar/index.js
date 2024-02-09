@@ -9,8 +9,9 @@ import styles from "./styles.module.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPeopleGroup, faGear, faFolder } from "@fortawesome/free-solid-svg-icons";
+import { FileDropdowns } from "../FileDropdowns";
 
-export function ProjectToolBar() {
+export function ProjectToolBar({ fileStructure, projectId }) {
   return (
     <Row className="h-100 p-1">
       <Col xs={"12"} className="g-0 py-1">
@@ -36,47 +37,7 @@ export function ProjectToolBar() {
                 </Button>
               </Col>
               <Col className="col-4 col-sm-12 mb-2">
-                <Dropdown>
-                  <Dropdown.Toggle
-                    className="w-100 text-center fs-5"
-                    variant="outline-success"
-                    id="dropdown-files"
-                  >
-                    <FontAwesomeIcon className="my-auto col-2" icon={faFolder} />
-                    <span className="mx-2 d-none d-sm-inline col-10">Files</span>
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu className={"w-100 " + styles.dropdownStyle}>
-                    <Dropdown.Item href="#/file-1">index.js</Dropdown.Item>
-
-                    <Dropdown className={"w-100"}>
-                      <Dropdown.Toggle
-                        variant="outline-light"
-                        className="w-100"
-                        id="dropdown-folder"
-                      >
-                        Files
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu
-                        className={"w-100 " + styles.dropdownStyle}
-                      >
-                        <Dropdown.Item href="#/file-3">
-                          Something else
-                        </Dropdown.Item>
-                        <Dropdown.Item href="#/file-3">
-                          Something else
-                        </Dropdown.Item>
-                        <Dropdown.Item href="#/file-3">
-                          Something else
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-
-                    <Dropdown.Item href="#/file-3">
-                      Something else
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                <FileDropdowns fileStructure={fileStructure} projectId={projectId}/>
               </Col>
             </Row>
           </Container>

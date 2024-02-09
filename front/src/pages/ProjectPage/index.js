@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -15,6 +16,8 @@ import axios from 'axios'
 
 export function ProjectPage() {
   const [file, setFile] = useState({content: ""})
+  const [fileStructure, setfileStructure] = useState({root: {}})
+  const { projectId } = useParams();
 
   const onChange = useCallback((val, viewUpdate) => {
     console.log(val);
@@ -22,12 +25,17 @@ export function ProjectPage() {
   }, []);
 
   const getFile = async () => {
-    const {data} = await axios.get(process.env.REACT_APP_API_URL + "/project/65c4bebe697229baef1f90c6/teste.js");
+    const {data} = await axios.get(process.env.REACT_APP_API_URL + "/project/65c4bebe697229baef1f90c6/files/teste.js");
     setFile(data)
+  }
+  const getFileStruct = async () => {
+    const {data} = await axios.get(process.env.REACT_APP_API_URL + "/project/65c4bebe697229baef1f90c6/files");
+    setfileStructure(data)
   }
 
   useEffect(() => {
     getFile()
+    getFileStruct()
   }, [])
 
   return (
@@ -57,7 +65,7 @@ export function ProjectPage() {
           </Col>
 
           <Col sm={"2"} className="d-block">
-            <ProjectToolBar/>
+            <ProjectToolBar fileStructure={fileStructure} projectId={projectId}/>
           </Col>
         </Row>
       </Container>
