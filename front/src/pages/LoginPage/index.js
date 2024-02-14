@@ -10,7 +10,6 @@ import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-
 export function LoginPage() {
   const [toggleCard, setToggleCard] = useState(false);
   const [loginClass, setLoginClass] = useState("");

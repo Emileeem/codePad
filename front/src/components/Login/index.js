@@ -6,6 +6,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import CryptoJS from "crypto-js";
+import { i18n } from "../../translate/i18n"
 
 export function Login({ loginHandle }) {
   const { setMessage, setShow, setVariant } = useContext(AlertContext);
@@ -57,34 +58,34 @@ export function Login({ loginHandle }) {
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group>
-        <Form.Label>Email address</Form.Label>
+        <Form.Label>{i18n.t("login.address")}</Form.Label>
 
         <Form.Control
           className={styles.inputEmail}
           type="email"
-          placeholder="Enter email"
+          placeholder={i18n.t("login.email")}
           variant="success"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
+          {i18n.t("login.text")}
         </Form.Text>
         <br/>
         <br/>
-        <Form.Label>Password</Form.Label>
+        <Form.Label>{i18n.t("login.password")}</Form.Label>
 
         <Form.Control
           className={styles.inputEmail}
           type="password"
-          placeholder="Enter Password"
+          placeholder={i18n.t("login.pass")}
           variant="success"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
       </Form.Group>
       <div className="d-flex justify-content-end">
-        <Button type="submit">Login</Button>
+        <Button type="submit">{i18n.t("login.button")}</Button>
       </div>
     </Form>
   );

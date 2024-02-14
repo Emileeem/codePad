@@ -4,6 +4,7 @@ import { LoginPage } from "./pages/LoginPage";
 import { ProjectPage } from "./pages/ProjectPage";
 import Container from "react-bootstrap/Container";
 import { AlertProvider } from "./context/alert";
+import { HomePage } from "./pages/HomePage";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/project" element={<ProjectPage />} />
+          <Route path="/home" element={<HomePage/>} />
         </Routes>
       </BrowserRouter>
     </AlertProvider>

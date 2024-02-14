@@ -10,6 +10,7 @@ import { AlertContext } from "../../context/alert";
 import CryptoJS from "crypto-js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { i18n } from "../../translate/i18n"
 
 export function Register({ registerHandle }) {
   const { setMessage, setShow, setVariant } = useContext(AlertContext);
@@ -61,37 +62,37 @@ export function Register({ registerHandle }) {
   }
   function formValid() {
     if (!name.includes(" ")) {
-      setMessage("Insira nome e sobrenome");
+      setMessage("{i18n.t(register.Surname)}");
       setShow(true);
       setVariant("danger");
       return false;
     }
     if (name.length < 5) {
-      setMessage("Insira um nome e sobrenome válidos");
+      setMessage("{i18n.t(register.ValidateSurname)}");
       setShow(true);
       setVariant("danger");
       return false;
     }
     if (!email.includes("@")) {
-      setMessage("Insira um e-mail válidos");
+      setMessage("{i18n.t(register.ValidateEmail)}");
       setShow(true);
       setVariant("danger");
       return false;
     }
     if (email.length < 5) {
-      setMessage("Insira um e-mail válido");
+      setMessage("{i18n.t(register.ValidateEmail)}");
       setShow(true);
       setVariant("danger");
       return false;
     }
     if (confirmPassword !== password) {
-      setMessage("As senhas não conferem");
+      setMessage("{i18n.t(register.ValidatePass)}");
       setShow(true);
       setVariant("danger");
       return false;
     }
     if (password.length < 6) {
-      setMessage("Senha inferior a 6 caracteres");
+      setMessage("{i18n.t(register.ValidateLengthPass)}");
       setShow(true);
       setVariant("danger");
       return false;
@@ -105,12 +106,12 @@ export function Register({ registerHandle }) {
         <Col lg={"10"}>
           <Form.Group as={Row} className="my-3">
             <Form.Label column sm="3">
-              Name
+              {i18n.t("register.name")}
             </Form.Label>
             <Col sm={"9"}>
               <Form.Control
                 type="text"
-                placeholder="Enter name"
+                placeholder={i18n.t("register.nameEnt")}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -118,12 +119,12 @@ export function Register({ registerHandle }) {
           </Form.Group>
           <Form.Group as={Row} className="my-3">
             <Form.Label column sm="3">
-              Email
+              {i18n.t("register.email")}
             </Form.Label>
             <Col sm={"9"}>
               <Form.Control
                 type="email"
-                placeholder="Enter email"
+                placeholder={i18n.t("register.emailEnt")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -131,12 +132,12 @@ export function Register({ registerHandle }) {
           </Form.Group>
           <Form.Group as={Row} className="my-3">
             <Form.Label column sm="3">
-              Nickname
+              {i18n.t("register.nickname")}
             </Form.Label>
             <Col sm={"9"}>
               <Form.Control
                 type="text"
-                placeholder="Enter nickname"
+                placeholder={i18n.t("register.nicknameEnt")}
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
               />
@@ -144,12 +145,12 @@ export function Register({ registerHandle }) {
           </Form.Group>
           <Form.Group as={Row} className="my-3">
             <Form.Label column sm="3">
-              Birthday
+              {i18n.t("register.birth")}
             </Form.Label>
             <Col sm={"9"}>
               <Form.Control
                 type="date"
-                placeholder="Enter birth"
+                placeholder={i18n.t("register.birthEnt")}
                 value={birth}
                 onChange={(e) => setBirth(e.target.value)}
               />
@@ -157,12 +158,12 @@ export function Register({ registerHandle }) {
           </Form.Group>
           <Form.Group as={Row} className="my-3">
             <Form.Label column sm="3">
-              Password
+              {i18n.t("register.pass")}
             </Form.Label>
             <Col sm={"9"}>
               <Form.Control
                 type="password"
-                placeholder="Enter password"
+                placeholder={i18n.t("register.passEnt")}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -170,12 +171,12 @@ export function Register({ registerHandle }) {
           </Form.Group>
           <Form.Group as={Row} className="my-3">
             <Form.Label column sm="3">
-              Confirm Pwd
+              {i18n.t("register.confirmPass")}
             </Form.Label>
             <Col sm={"9"}>
               <Form.Control
                 type="password"
-                placeholder="Confirm password"
+                placeholder={i18n.t("register.confirmPass")}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPass(e.target.value)}
               />
