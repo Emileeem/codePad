@@ -4,13 +4,15 @@ const Register = require("../model/register");
 class LoginController {
 
   static async login(req, res) {
-
-    // var bytes = CryptoJS.AES.decrypt(req.body.jsonCrypt, process.env.SECRET);
-    // const decryptd = bytes.toString(CryptoJS.enc.Utf8);
-    // const json = JSON.parse(decryptd);
+    console.log(req.body, process.env.secret)
+    var bytes = CryptoJS.AES.decrypt(req.body.jsonCrypt, process.env.SECRET);
+    const decryptd = bytes.toString(CryptoJS.enc.Utf8);
+    console.log(decryptd)
+    const json = JSON.parse(decryptd);
+    console.log(json)
     
-    // const { email, password } = json;
-    const { email, password } = req.body;
+    const { email, password } = json;
+    // const { email, password } = req.body;
 
     if (!email)
     return res.status(422).json({ message: "O e-mail é obrigatório" });
