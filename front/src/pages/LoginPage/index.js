@@ -8,6 +8,8 @@ import { CardLoginRegister } from "../../components/CardLoginRegister";
 import { useState } from "react";
 import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+
 
 export function LoginPage() {
   const [toggleCard, setToggleCard] = useState(false);
@@ -15,7 +17,12 @@ export function LoginPage() {
   const [registerClass, setRegisterClass] = useState(styles.registerStart);
   const navigate = useNavigate();
 
+  // async function Login(){
+  //   const res = await axios.get('http://localhost:8080/api/login')
+  //   console.log(res);
+  // }
   const handleButton = () => {
+    // console.log(process.env.REACT_APP_SECRET)
     if (toggleCard) {
       setLoginClass(styles.loginOut);
       setRegisterClass(styles.registerIn);
