@@ -7,7 +7,12 @@ const CryptoJS = require("crypto-js");
 class RegisterController {
 
   static async register(req, res) {
-    const { name, birth, email, nickname, password, confirmPassword } = req.body;
+
+    var bytes = CryptoJS.AES.decrypt(req.body.jsonCrypt, process.env.SECRET);
+    const decryptd = bytes.toString(CryptoJS.enc.Utf8);
+    const json = JSON.parse(decryptd);
+  
+    const { name, birth, email, nickname, password, confirmPassword } = json;
 
     if (!name) return res.status(400).json({ message: "O nome é obrigatório" });
 
