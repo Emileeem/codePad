@@ -4,8 +4,8 @@ import Row from "react-bootstrap/Row";
 export function Home({ HomeHandle }) {
   return (
     <>
-    <Row>
-      <Card border="primary" style={{ width: "18rem" }}>
+    <Row className="m-4 p-2">
+      <Card className="m-4 p-2" border="primary" style={{ width: "25rem" }}>
         <Card.Body>
           <Card.Title>Título do projeto</Card.Title>
           <Card.Text>
@@ -13,7 +13,7 @@ export function Home({ HomeHandle }) {
           </Card.Text>
         </Card.Body>
       </Card>
-      <Card border="primary" style={{ width: "18rem" }}>
+      <Card className="m-4 p-2" border="primary" style={{ width: "25rem" }}>
         <Card.Body>
           <Card.Title>Título do projeto</Card.Title>
           <Card.Text>
@@ -21,7 +21,7 @@ export function Home({ HomeHandle }) {
           </Card.Text>
         </Card.Body>
       </Card>
-      <Card border="primary" style={{ width: "18rem" }}>
+      <Card className="m-4 p-2" border="primary" style={{ width: "25rem" }}>
         <Card.Body>
           <Card.Title>Título do projeto</Card.Title>
           <Card.Text>

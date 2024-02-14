@@ -1,9 +1,10 @@
 import { Home } from "../../components/Home";
-
+import { Menu } from "../../components/Menu";
 export function HomePage() {
     return(
-        <Home>
-            
-        </Home>
+        <>
+            <Menu/>
+            <Home/>
+        </>
     )
 }
