@@ -26,6 +26,12 @@ const messages = {
                 pass: "Password",
                 passEnt: "Enter password",
                 confirmPass: "Confirm password",
+            },
+            navBar:{
+                Profile: "My profile",
+                New: "Create new Project",
+                Placeholder: "Search Project",
+                Search: "Search"
             }
         }
     }

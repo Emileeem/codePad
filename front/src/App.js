@@ -5,7 +5,6 @@ import { ProjectPage } from "./pages/ProjectPage";
 import Container from "react-bootstrap/Container";
 import { AlertProvider } from "./context/alert";
 import { HomePage } from "./pages/HomePage";
-
 function App() {
   return (
     <AlertProvider>
