@@ -1,16 +1,11 @@
 const mongoose = require("mongoose");
-const { userSchema } = require("./user");
 const ArchiveSchema =   new mongoose.Schema({
-  user: {
-    type: userSchema,
-    required: true
-  },
-  title: {
+  fileName: {
     type: String,
     required: true,
     minlength: 3,
   },
-  text: {
+  content: {
     type: String,
     required: false
   },

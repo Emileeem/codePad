@@ -1,4 +1,5 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState, useContext } from "react";
+import { useParams, useLocation } from "react-router-dom";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -11,14 +12,64 @@ import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { tokyoNight } from "@uiw/codemirror-themes-all";
 import { ProjectToolBar } from "../../components/ProjectToolBar";
-
+import { FileApiContext } from "../../context/FileApi";
 
 export function ProjectPage() {
-  const [value, setValue] = useState("console.log('hello world!');");
+  const location = useLocation()
+  const { updateFile, getFile, getFileStruct } = useContext(FileApiContext);
+  const [fileStructure, setfileStructure] = useState({ root: {} });
+  const [fileContent, setFileContent] = useState("")
+  const [currFile, setCurrFile] = useState({
+    content: "",
+    createdAt: "",
+    fileName: "",
+    removedAt: "",
+    updatedAt: "",
+    _id: "",
+  });
+
+  const { projectId } = useParams();
+  let timeoutId = 0
+
+
   const onChange = useCallback((val, viewUpdate) => {
-    console.log(val);
-    setValue(val);
+    setFileContent(val);
+    console.log(fileStructure)
   }, []);
+
+  const loadFileStruct = async () => {
+    setfileStructure(await getFileStruct(projectId));
+  }
+  const getAndSetFile = async (path) => {
+    setCurrFile(
+      await getFile(
+        projectId,
+        path.substring(("/project/" + projectId).length))
+    )
+  }
+
+  
+  useEffect(() => {
+    loadFileStruct()
+    console.log(fileStructure)
+  }, []);
+
+  useEffect( () => {
+    getAndSetFile(location.pathname)
+  }, [location.pathname]);
+
+  useEffect(() => {
+    setFileContent(currFile.content);
+  }, [currFile])
+
+  useEffect(() => {
+    clearTimeout(timeoutId)
+    timeoutId = setTimeout(() => {
+      updateFile(projectId, currFile._id, currFile.fileName, fileContent)
+      console.log("saved")
+      clearTimeout(timeoutId)
+    }, 1000)
+  }, [fileContent])
 
   return (
     <>
@@ -32,7 +83,7 @@ export function ProjectPage() {
                     minHeight="100%"
                     className={styles.CodeMirror}
                     theme={tokyoNight}
-                    value={value}
+                    value={fileContent}
                     extensions={[javascript({ jsx: true })]}
                     onChange={onChange}
                   />
@@ -47,7 +98,11 @@ export function ProjectPage() {
           </Col>
 
           <Col sm={"2"} className="d-block">
-            <ProjectToolBar/>
+            <ProjectToolBar
+              fileStructure={fileStructure}
+              projectId={projectId}
+              loadFileStruct={loadFileStruct}
+            />
           </Col>
         </Row>
       </Container>

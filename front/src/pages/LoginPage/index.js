@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import { Login } from "../../components/Login";
 import { Register } from "../../components/Register";
 import { CardLoginRegister } from "../../components/CardLoginRegister";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
@@ -34,6 +34,10 @@ export function LoginPage() {
   const registerHandle = () => {
     loginHandle();
   }
+
+  useEffect(() => {
+    console.log(process.env.REACT_APP_API_URL + "/project/65c4bebe697229baef1f90c6/teste.js")
+  })
 
   return (
     <>

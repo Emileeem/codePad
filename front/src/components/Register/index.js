@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import styles from "./styles.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
-import { AlertContext } from "../../context/alert";
+import { AlertContext } from "../../context/Alert";
 import CryptoJS from "crypto-js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +24,6 @@ export function Register({ registerHandle }) {
   const navigate = useNavigate();
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("teste")
     if (!formValid()) return;
 
     const json = {
@@ -35,14 +34,14 @@ export function Register({ registerHandle }) {
       password,
       confirmPassword
     };
-    console.log(json)
+    
     const jsonCrypt = CryptoJS.AES.encrypt(
       JSON.stringify(json),
       process.env.REACT_APP_SECRET
     ).toString();
 
     try {
-      var res = await axios.post("http://localhost:8080/api/register", {
+      var res = await axios.post(process.env.REACT_APP_API_URL + "/register", {
         jsonCrypt,
       });
       console.log("res",res);
@@ -55,7 +54,7 @@ export function Register({ registerHandle }) {
       setPassword("");
       setConfirmPass("");
       setNickname("");
-      navigate("/project");
+      navigate("/home");
     } catch (error) {
       console.log(error);
     } 
@@ -100,6 +99,7 @@ export function Register({ registerHandle }) {
 
     return true;
   }
+
   return (
     <Form onSubmit={handleSubmit}>
       <Row>

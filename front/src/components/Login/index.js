@@ -1,7 +1,7 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import styles from "./styles.module.scss";
-import { AlertContext } from "../../context/alert";
+import { AlertContext } from "../../context/Alert";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -32,7 +32,7 @@ export function Login({ loginHandle }) {
     ).toString();
 
     try {
-      var res = await axios.post("http://localhost:8080/api/login", {jsonCrypt})
+      var res = await axios.post(process.env.REACT_APP_API_URL + "/login", {jsonCrypt})
 
       setMessage(res.data.message)
       setVariant("success")
