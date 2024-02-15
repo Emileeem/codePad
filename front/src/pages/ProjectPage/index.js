@@ -91,7 +91,9 @@ export function ProjectPage() {
               </Col>
               <Col xs={"12"} className="g-0 py-1 h-25 d-block">
                 <Card border="success" className="h-100">
-                  teste
+                  <Card.Body>
+                    WIP - Console
+                  </Card.Body>
                 </Card>
               </Col>
             </Row>

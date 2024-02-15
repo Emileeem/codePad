@@ -65,7 +65,7 @@ export function FileDropdowns({ fileStructure, projectId }) {
         id="dropdown-files"
       >
         <FontAwesomeIcon className="my-auto col-2" icon={faFolder} />
-        <span className="mx-2 d-none d-sm-inline col-10">Files</span>
+        <span className="mx-2 d-none d-lg-inline col-10">Files</span>
       </Dropdown.Toggle>
 
       <Dropdown.Menu className={"w-100 " + styles.dropdownStyle}>

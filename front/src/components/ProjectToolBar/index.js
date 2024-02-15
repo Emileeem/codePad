@@ -24,8 +24,8 @@ export function ProjectToolBar({ fileStructure, projectId, loadFileStruct }) {
                   variant="outline-primary"
                   className="w-100 text-start fs-5"
                 >
-                  <FontAwesomeIcon className="my-auto col-12 col-sm-2" icon={faPeopleGroup} />
-                  <span className="mx-2 d-none d-sm-inline">Invite</span>
+                  <FontAwesomeIcon className="my-auto col-12 col-lg-2" icon={faPeopleGroup} />
+                  <span className="mx-2 d-none d-lg-inline">Invite</span>
                 </Button>
               </Col>
               <Col className="col-4 col-sm-12 mb-2">
@@ -33,8 +33,8 @@ export function ProjectToolBar({ fileStructure, projectId, loadFileStruct }) {
                   variant="outline-warning"
                   className="w-100 text-start fs-5"
                 >
-                  <FontAwesomeIcon className="my-auto col-12 col-sm-2" icon={faGear} />
-                  <span className="mx-2 d-none d-sm-inline">Config</span>
+                  <FontAwesomeIcon className="my-auto col-12 col-lg-2" icon={faGear} />
+                  <span className="mx-2 d-none d-lg-inline">Config</span>
                 </Button>
               </Col>
               <Col className="col-4 col-sm-12 mb-2">

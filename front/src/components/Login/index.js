@@ -6,26 +6,26 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import CryptoJS from "crypto-js";
-import { i18n } from "../../translate/i18n"
+import { i18n } from "../../translate/i18n";
 
 export function Login({ loginHandle }) {
   const { setMessage, setShow, setVariant } = useContext(AlertContext);
 
-  var [email, setEmail] = useState('');
-  var [password, setPassword] = useState('');
+  var [email, setEmail] = useState("");
+  var [password, setPassword] = useState("");
 
   const navigate = useNavigate();
-  
+
   async function handleSubmit(e) {
     e.preventDefault();
-    
-    if(!formValid()) return;
+
+    if (!formValid()) return;
 
     const json = {
       email,
-      password
+      password,
     };
-    console.log(json)
+    console.log(json);
     const jsonCrypt = CryptoJS.AES.encrypt(
       JSON.stringify(json),
       process.env.REACT_APP_SECRET
@@ -43,14 +43,17 @@ export function Login({ loginHandle }) {
       navigate("/home")
     } catch (error){
       console.log(error)
+      setMessage("Login incorreto.");
+      setShow(true);
+      setVariant("danger");
     }
   }
 
   function formValid() {
-    if(!email || !password) {
-      setMessage("O usuário não existe")
-      setShow(true)
-      setVariant("danger")
+    if (!email || !password) {
+      setMessage("O usuário não existe");
+      setShow(true);
+      setVariant("danger");
       return false;
     }
     return true;
@@ -58,9 +61,8 @@ export function Login({ loginHandle }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group>
+      <Form.Group className="mb-3">
         <Form.Label>{i18n.t("login.address")}</Form.Label>
-
         <Form.Control
           className={styles.inputEmail}
           type="email"
@@ -69,13 +71,10 @@ export function Login({ loginHandle }) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <Form.Text className="text-muted">
-          {i18n.t("login.text")}
-        </Form.Text>
-        <br/>
-        <br/>
+        <Form.Text className="text-muted">{i18n.t("login.text")}</Form.Text>
+      </Form.Group>
+      <Form.Group className="mb-3">
         <Form.Label>{i18n.t("login.password")}</Form.Label>
-
         <Form.Control
           className={styles.inputEmail}
           type="password"

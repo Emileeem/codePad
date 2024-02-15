@@ -15,6 +15,7 @@ export const AlertProvider = ({ children }) => {
     }
 
     useEffect(() => {
+        console.log("chamou alert")
         handleShow()
     }, [show])
 
