@@ -32,6 +32,16 @@ const messages = {
                 New: "Criar novo Projeto",
                 Placeholder: "Procurar Projeto",
                 Search: "Pesquisar"
+            },
+            createProject:{
+                message:"É necessário dar um nome ao projeto",
+                proj: "Novo Projeto",
+                title: "Nome do Projeto",
+                placTitle: "Insira o nome do projeto",
+                descript: "Descrição do Projeto",
+                placDescript: "Adicione uma Descrição",
+                close: "Fechar",
+                save: "Criar"
             }
         }
     }

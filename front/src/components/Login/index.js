@@ -33,13 +33,14 @@ export function Login({ loginHandle }) {
 
     try {
       var res = await axios.post(process.env.REACT_APP_API_URL + "/login", {jsonCrypt})
-
+      sessionStorage.setItem("token", res.data.token);
+      
       setMessage(res.data.message)
       setVariant("success")
       setShow(true);
       setEmail("")
       setPassword("")
-      navigate("/project")
+      navigate("/home")
     } catch (error){
       console.log(error)
     }

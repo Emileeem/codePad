@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Alert } from "react-bootstrap";
-import { AlertContext } from "../../context/alert";
+import { AlertContext } from "../../context/Alert";
 
 export default function AlertComponent() {
   const { message, variant, show, setShow } = useContext(AlertContext);

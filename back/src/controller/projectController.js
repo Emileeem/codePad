@@ -1,10 +1,12 @@
 const Project = require("../model/project");
 const { User } = require("../model/user");
+const Register  = require("../model/register");
 const { Archive } = require("../model/archive");
-
+var CryptoJS = require("crypto-js");
+const jwt = require('jsonwebtoken')
 class projectController {
   static async create(req, res) {
-    const { title, userid } = req.body;
+    const { title, userid, description } = req.body;
     if (!title || !userid)
       return res
         .status(400)
@@ -16,12 +18,14 @@ class projectController {
         .send({ message: "o titulo não pode ser menor que 4 caracteres" });
 
     try {
-      const user = await User.findById(userid);
+      const register = await Register.findById(userid);
+      const user = await User.findById(register.user._id)
       const existingProject = await Project.findOne({ title, user });
 
       if (existingProject) {
         return res.status(422).json({ message: "Projeto já existe" });
       }
+      
       if (!user) {
         return res.status(404).json({ message: "Usuário não encontrado" });
       }
@@ -29,6 +33,7 @@ class projectController {
       const project = {
         title,
         user,
+        description,
         archives: [],
         createdAt: Date.now(),
         updatedAt: Date.now(),
