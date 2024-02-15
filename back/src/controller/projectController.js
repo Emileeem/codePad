@@ -70,7 +70,7 @@ class projectController {
 
   static async update(req, res) {
     const { projectId, fileName, content, id } = req.body;
-    console.log(projectId, fileName, content, id)
+    console.log(projectId, fileName, content, id);
 
     if (!projectId) {
       return res.status(400).send({ message: "O ID do projeto é obrigatório" });
@@ -103,7 +103,6 @@ class projectController {
         // } else {
         //   archives.splice(existingArchiveIndex, 1);
         // }
-
       } else {
         let filenameUsed = false;
         archives.forEach((element) => {
@@ -190,17 +189,14 @@ class projectController {
       filesStructure["root"] = {};
       project.archives.every((e) => {
         let items = e.fileName.split("/");
-        if(e.fileName.slice(-1) === "/")
-          items = [items.at(-2) + "/"]
-        
+        if (e.fileName.slice(-1) === "/") items = [items.at(-2) + "/"];
 
         var ref = filesStructure.root;
         for (let i = 0; i < items.length; i++) {
           if (items.length - i == 1) {
-            if(items[i].slice(-1) == "/")
+            if (items[i].slice(-1) == "/")
               ref[items[i].slice(0, -1)] = "folder";
-            else
-              ref[items[i]] = "file";
+            else ref[items[i]] = "file";
           } else {
             if (!ref[items[i]]) ref[items[i]] = {};
             ref = ref[items[i]];
@@ -209,17 +205,37 @@ class projectController {
         return true;
       });
 
-      if (filesStructure){
-        console.log(filesStructure)
+      if (filesStructure) {
+        console.log(filesStructure);
         return res.status(200).send(filesStructure);
       }
-
     } catch (error) {
       return res
         .status(500)
         .send({ error: "Falha ao resgatar o arquivo", data: error.message });
     }
     return res.status(404).send({ message: "Não encontrado" });
+  }
+
+  static async getProjectsByUser(req, res) {
+    const { userId } = req.params;
+
+    if (!userId) return res.status(422).send("Nenhum usuario informado");
+
+    try {
+      const user = await User.findById(userId);
+      if (!user)
+        return res.status(404).send("Nenhum usuario encontrado");
+      
+      const projects = await Project.find({ user: user }, 'title description updatedAt');
+
+      return res.status(200).send(projects)
+
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ error: "Falha ao resgatar projetos", data: error.message });
+    }
   }
 }
 module.exports = projectController;

@@ -6,6 +6,7 @@ route
     .post('/', ProjectController.create)
     .delete('/:projectId', ProjectController.delete)
     .put('/', ProjectController.update)
+    .get('/user/:userId', ProjectController.getProjectsByUser)
     .get('/:projectid/files', ProjectController.getFileNames)
     .get('/:projectid/files/*', ProjectController.getFile)
 

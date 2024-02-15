@@ -41,7 +41,6 @@ export function Register({ registerHandle }) {
       process.env.REACT_APP_SECRET
     ).toString();
 
-
     try {
       var res = await axios.post(process.env.REACT_APP_API_URL + "/register", {
         jsonCrypt,
