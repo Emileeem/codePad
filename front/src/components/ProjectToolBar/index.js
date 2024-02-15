@@ -10,8 +10,9 @@ import styles from "./styles.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPeopleGroup, faGear, faFolder } from "@fortawesome/free-solid-svg-icons";
 import { FileDropdowns } from "../FileDropdowns";
+import { NewFileModal } from "../NewFileModal";
 
-export function ProjectToolBar({ fileStructure, projectId }) {
+export function ProjectToolBar({ fileStructure, projectId, loadFileStruct }) {
   return (
     <Row className="h-100 p-1">
       <Col xs={"12"} className="g-0 py-1">
@@ -38,6 +39,9 @@ export function ProjectToolBar({ fileStructure, projectId }) {
               </Col>
               <Col className="col-4 col-sm-12 mb-2">
                 <FileDropdowns fileStructure={fileStructure} projectId={projectId}/>
+              </Col>
+              <Col className="col-4 col-sm-12 mb-2">
+                <NewFileModal projectId={projectId} loadFileStruct={loadFileStruct}></NewFileModal>
               </Col>
             </Row>
           </Container>

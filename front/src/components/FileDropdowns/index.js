@@ -10,22 +10,6 @@ import { faFolder } from "@fortawesome/free-solid-svg-icons";
 
 export function FileDropdowns({ fileStructure, projectId }) {
   const navigate = useNavigate();
-  const [testFs, setTestFs] = useState({
-    root: {
-      "index.js": "file",
-      pasta1: {
-        "index.js": "file",
-        "server.js": "file",
-        pasta2: {
-          "index2.js": "file",
-          "server2.js": "file",
-        },
-      },
-      pasta2: {
-        "config.js": "file",
-      },
-    },
-  });
 
   function setFileStruct(fs, parent) {
     let result = [];
@@ -34,11 +18,11 @@ export function FileDropdowns({ fileStructure, projectId }) {
     for (let key of keys) {
       switch (fs[key]) {
         case "file":
-          result.push(<Dropdown.Item onClick={() => navigate(parent + key)}>{key}</Dropdown.Item>);
+          result.push(<Dropdown.Item key={parent + key} onClick={() => navigate(parent + key)}>{key}</Dropdown.Item>);
           break;
         case "folder":
           result.push(
-            <Dropdown className={"w-100" + styles.displace}>
+            <Dropdown key={parent + key} className={"w-100 " + styles.displace}>
               <Dropdown.Toggle
                 variant="outline-light"
                 className="w-100"
@@ -54,7 +38,7 @@ export function FileDropdowns({ fileStructure, projectId }) {
           break;
         default:
           result.push(
-            <Dropdown className={"w-100 " + styles.displace}>
+            <Dropdown key={parent + key} className={"w-100 " + styles.displace}>
               <Dropdown.Toggle
                 variant="outline-light"
                 className="w-100"
@@ -85,7 +69,7 @@ export function FileDropdowns({ fileStructure, projectId }) {
       </Dropdown.Toggle>
 
       <Dropdown.Menu className={"w-100 " + styles.dropdownStyle}>
-        {setFileStruct(testFs.root, "/project/" + projectId + "/")}
+        {setFileStruct(fileStructure.root, "/project/" + projectId + "/")}
       </Dropdown.Menu>
     </Dropdown>
   );

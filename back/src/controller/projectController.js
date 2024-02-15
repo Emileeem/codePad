@@ -70,6 +70,7 @@ class projectController {
 
   static async update(req, res) {
     const { projectId, fileName, content, id } = req.body;
+    console.log(projectId, fileName, content, id)
 
     if (!projectId) {
       return res.status(400).send({ message: "O ID do projeto é obrigatório" });
@@ -95,13 +96,14 @@ class projectController {
             .send({ message: "O arquivo não existe neste projeto" });
         }
 
-        if (fileName && content) {
-          archives[existingArchiveIndex].fileName = fileName;
-          archives[existingArchiveIndex].content = content;
-          archives[existingArchiveIndex].updatedAt = Date.now();
-        } else {
-          archives.splice(existingArchiveIndex, 1);
-        }
+        // if (fileName && content) {
+        archives[existingArchiveIndex].fileName = fileName;
+        archives[existingArchiveIndex].content = content;
+        archives[existingArchiveIndex].updatedAt = Date.now();
+        // } else {
+        //   archives.splice(existingArchiveIndex, 1);
+        // }
+
       } else {
         let filenameUsed = false;
         archives.forEach((element) => {
@@ -188,12 +190,15 @@ class projectController {
       filesStructure["root"] = {};
       project.archives.every((e) => {
         let items = e.fileName.split("/");
+        if(e.fileName.slice(-1) === "/")
+          items = [items.at(-2) + "/"]
+        
+
         var ref = filesStructure.root;
-        console.log(items.length);
         for (let i = 0; i < items.length; i++) {
           if (items.length - i == 1) {
-            if(items[i].slice[-1] == "/")
-              ref[items[i]] = "folder";
+            if(items[i].slice(-1) == "/")
+              ref[items[i].slice(0, -1)] = "folder";
             else
               ref[items[i]] = "file";
           } else {
@@ -204,8 +209,11 @@ class projectController {
         return true;
       });
 
-      if (filesStructure)
+      if (filesStructure){
+        console.log(filesStructure)
         return res.status(200).send(filesStructure);
+      }
+
     } catch (error) {
       return res
         .status(500)
