@@ -10,42 +10,44 @@ import { AlertContext } from "../../context/Alert";
 import CryptoJS from "crypto-js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { i18n } from "../../translate/i18n"
+import { i18n } from "../../translate/i18n";
+import AlertComponent from "../AlertComponent";
 
 export function Register({ registerHandle }) {
   const { setMessage, setShow, setVariant } = useContext(AlertContext);
 
-  var [name, setName] = useState('');
-  var [nickname, setNickname] = useState('');
-  var [email, setEmail] = useState('');
-  var [birth, setBirth] = useState('');
-  var [password, setPassword] = useState('');
-  var [confirmPassword, setConfirmPass] = useState('');
+  var [name, setName] = useState("");
+  var [nickname, setNickname] = useState("");
+  var [email, setEmail] = useState("");
+  var [birth, setBirth] = useState("");
+  var [password, setPassword] = useState("");
+  var [confirmPassword, setConfirmPass] = useState("");
   const navigate = useNavigate();
   async function handleSubmit(e) {
     e.preventDefault();
     if (!formValid()) return;
-
+    console.log("teste");
     const json = {
       name,
       email,
       nickname,
       birth,
       password,
-      confirmPassword
+      confirmPassword,
     };
-    
+
     const jsonCrypt = CryptoJS.AES.encrypt(
       JSON.stringify(json),
       process.env.REACT_APP_SECRET
     ).toString();
 
+
     try {
       var res = await axios.post(process.env.REACT_APP_API_URL + "/register", {
         jsonCrypt,
       });
-      console.log("res",res);
-      
+      console.log("res", res);
+
       setMessage(res.data.message);
       setVariant("sucess");
       setShow(true);
@@ -57,41 +59,41 @@ export function Register({ registerHandle }) {
       navigate("/home");
     } catch (error) {
       console.log(error);
-    } 
+    }
   }
   function formValid() {
     if (!name.includes(" ")) {
-      setMessage("{i18n.t(register.Surname)}");
+      setMessage(i18n.t("register.Surname"));
       setShow(true);
       setVariant("danger");
       return false;
     }
     if (name.length < 5) {
-      setMessage("{i18n.t(register.ValidateSurname)}");
+      setMessage(i18n.t("register.ValidateSurname"));
       setShow(true);
       setVariant("danger");
       return false;
     }
     if (!email.includes("@")) {
-      setMessage("{i18n.t(register.ValidateEmail)}");
+      setMessage(i18n.t("register.ValidateEmail"));
       setShow(true);
       setVariant("danger");
       return false;
     }
     if (email.length < 5) {
-      setMessage("{i18n.t(register.ValidateEmail)}");
+      setMessage(i18n.t("register.ValidateEmail"));
       setShow(true);
       setVariant("danger");
       return false;
     }
     if (confirmPassword !== password) {
-      setMessage("{i18n.t(register.ValidatePass)}");
+      setMessage(i18n.t("register.ValidatePass"));
       setShow(true);
       setVariant("danger");
       return false;
     }
     if (password.length < 6) {
-      setMessage("{i18n.t(register.ValidateLengthPass)}");
+      setMessage(i18n.t("register.ValidateLengthPass"));
       setShow(true);
       setVariant("danger");
       return false;

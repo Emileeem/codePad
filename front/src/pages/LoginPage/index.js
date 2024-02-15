@@ -8,7 +8,8 @@ import { CardLoginRegister } from "../../components/CardLoginRegister";
 import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
+import AlertComponent from "../../components/AlertComponent";
 
 export function LoginPage() {
   const [toggleCard, setToggleCard] = useState(false);
@@ -33,17 +34,21 @@ export function LoginPage() {
   };
   const registerHandle = () => {
     loginHandle();
-  }
+  };
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_API_URL + "/project/65c4bebe697229baef1f90c6/teste.js")
-  })
+    console.log(
+      process.env.REACT_APP_API_URL +
+        "/project/65c4bebe697229baef1f90c6/teste.js"
+    );
+  });
 
   return (
     <>
       <Container fluid>
         <Row className="justify-content-center">
           <Col sm={"6"} className="d-block">
+            <AlertComponent />
             <Row className="py-2">
               <Col xs={"6"}>
                 <Button
@@ -66,12 +71,12 @@ export function LoginPage() {
             </Row>
             <div className={loginClass}>
               <CardLoginRegister title="Login">
-                <Login loginHandle={loginHandle}/>
+                <Login loginHandle={loginHandle} />
               </CardLoginRegister>
             </div>
             <div className={registerClass}>
-              <CardLoginRegister title="Register" >
-                <Register registerHandle={registerHandle}/>
+              <CardLoginRegister title="Register">
+                <Register registerHandle={registerHandle} />
               </CardLoginRegister>
             </div>
           </Col>
