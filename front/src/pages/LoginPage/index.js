@@ -36,13 +36,6 @@ export function LoginPage() {
     loginHandle();
   };
 
-  useEffect(() => {
-    console.log(
-      process.env.REACT_APP_API_URL +
-        "/project/65c4bebe697229baef1f90c6/teste.js"
-    );
-  });
-
   return (
     <>
       <Container fluid>
